@@ -103,7 +103,7 @@ My argument presents contributions across all three repositories. Merged PRs are
 
 **Impact:** Establishes a test baseline for the offchain-worker command, reducing the risk of regressions in a component that was previously untested.
 
-My contributions reflect a deliberate effort to build depth across the protocol stack — from runtime correctness and storage ergonomics in the SDK, to integration-level confidence via ecosystem tests. I intend to continue expanding coverage in FRAME tooling, cross-chain messaging, and virtual machine internals. A full picture of my contributions across Polkadot-SDK, Polkadot Ecosystem Tests, and Try Runtime CLI can be found below.
+My contributions reflect a deliberate effort to build depth across the protocol stack. A full picture of my contributions across Polkadot-SDK, Polkadot Ecosystem Tests, and Try Runtime CLI can be found below.
 
 - [polkadot-sdk:@naijauser](https://github.com/paritytech/polkadot-sdk/pulls/naijauser)
 - [polkadot-ecosystem-tests:@naijauser](https://github.com/open-web3-stack/polkadot-ecosystem-tests/pulls?q=is%3Apr+author%3Anaijauser+)
