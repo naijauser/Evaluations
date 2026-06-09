@@ -28,8 +28,6 @@ I have been actively contributing to the Polkadot ecosystem since November 2025.
 For promotion to Rank 1, the Manifesto states as a requirement:
 >Three clear examples of a modest but substantial contribution to protocol development
 
-My argument contains only merged PRs from Polkadot-SDK and Polkadot Ecosystem Tests, along with their impact. Contributions to Try Runtime CLI are ongoing and linked at the end.
-
 ### Polkadot-SDK
 #### 1. Add support for asset V3 to V5 conversion of LocalPay (merged)
 [polkadot-sdk#10657](https://github.com/paritytech/polkadot-sdk/pull/10657) adds V3→V5 asset conversion support to the `match_asset` function in `LocalPay`. The function previously only handled V4 and V5 assets — clients still encoding assets as V3 would fail asset matching entirely, blocking fee payment. The fix adds a V3→V5 conversion path (via V4), restoring compatibility for legacy clients without breaking existing behaviour.
