@@ -28,42 +28,7 @@ I have been actively contributing to the Polkadot ecosystem since November 2025.
 For promotion to Rank 1, the Manifesto states as a requirement:
 >Three clear examples of a modest but substantial contribution to protocol development
 
-### Polkadot-SDK
-#### 1. Add support for asset V3 to V5 conversion of LocalPay (merged)
-[polkadot-sdk#10657](https://github.com/paritytech/polkadot-sdk/pull/10657) adds V3→V5 asset conversion support to the `match_asset` function in `LocalPay`. The function previously only handled V4 and V5 assets — clients still encoding assets as V3 would fail asset matching entirely, blocking fee payment. The fix adds a V3→V5 conversion path (via V4), restoring compatibility for legacy clients without breaking existing behaviour.
-
-**Impact:** Unblocks fee payment for runtimes using `LocalPay` where the sender encodes assets as V3, preventing silent transaction failures at the XCM version boundary.
-
-#### 2. Remove `pallet::getter` usage from sassafras pallet (merged)
-[polkadot-sdk#10460](https://github.com/paritytech/polkadot-sdk/pull/10460) removes `pallet::getter` from the sassafras pallet and replaces it with the preferred syntax `Key::<T>::get()`. The `pallet::getter` macro generates auto-named getter functions that are being phased out across the SDK in favour of explicit storage access, which is less error-prone and reduces macro expansion overhead.
-
-**Impact:** Advances the ecosystem-wide removal of `pallet::getter`, reducing macro expansion overhead and aligning the sassafras pallet with the modern FRAME storage access convention.
-
-#### 3. Remove `pallet::getter` usage from Merkle Mountain Range pallet (merged)
-[polkadot-sdk#10437](https://github.com/paritytech/polkadot-sdk/pull/10437) removes `pallet::getter` from the Merkle Mountain Range pallet and replaces it with the preferred syntax `Key::<T>::get()`.
-
-**Impact:** Advances the ecosystem-wide removal of `pallet::getter`, reducing macro expansion overhead and aligning the MMR pallet with the modern FRAME storage access convention.
-
-#### 4. Add dedicated BenchmarkConfig trait to FRAME (open)
-[polkadot-sdk#10806](https://github.com/paritytech/polkadot-sdk/pull/10806) introduces a dedicated `BenchmarkConfig` trait that extends `pallet::Config` and houses benchmarking-specific helpers separately from the main pallet configuration. Previously, benchmarking logic had to be embedded directly in the `Config` trait behind a `runtime-benchmarks` feature flag, cluttering production configuration with test-only concerns. The PR demonstrates the pattern with an example pallet where runtimes implement `BenchmarkConfig` independently, supplying a `BenchmarkHelper` type without touching the core `Config` trait.
-
-**Impact:** Cleanly separates benchmarking configuration from production pallet configuration, reducing feature-flag noise in `Config` and making it easier to add complex benchmark setup logic without modifying the main trait.
-
-#### 5. Run PVF worker security checks at node startup (open)
-[polkadot-sdk#10386](https://github.com/paritytech/polkadot-sdk/pull/10386) moves PVF worker security checks to run at node startup rather than only when a worker is first used. Previously, the node verified worker binary versions on startup but deferred all other integrity checks until the worker was actually invoked — which only happens when the node is in the active validator set. The fix invokes the full set of checks at startup and halts the node immediately if any fail, so operators are informed before the node is ever scheduled to validate.
-
-**Impact:** Eliminates a silent failure window where a validator node could run with broken worker binaries undetected, protecting both operator rewards and broader network performance.
-
-#### 6. Remove `pallet::getter` usage from snowbridge pallets (open)
-[polkadot-sdk#10467](https://github.com/paritytech/polkadot-sdk/pull/10467) removes `pallet::getter` from the snowbridge pallets and replaces it with the preferred syntax `Key::<T>::get()`. The `pallet::getter` macro generates auto-named getter functions that are being phased out across the SDK in favour of explicit storage access, which is less error-prone and reduces macro expansion overhead.
-
-**Impact:** Advances the ecosystem-wide removal of `pallet::getter` into the snowbridge pallets, reducing macro expansion overhead and aligning them with the modern FRAME storage access convention.
-
-#### 7. Add try-state checks to the timestamp pallet (open)
-[polkadot-sdk#10426](https://github.com/paritytech/polkadot-sdk/pull/10426) adds `do_try_state` to the timestamp pallet, implementing the try-state invariant checking pattern for pallet state validation. Try-state checks verify that a pallet's on-chain state is consistent. The PR adds the validation logic, integrates the `ensure` macro, and updates the test suite to cover the new checks.
-
-**Impact:** Brings the timestamp pallet into the try-state framework, enabling runtime developers and upgrade tooling to catch state inconsistencies in this pallet before they propagate into production.
-
+My argument presents contributions across all three repositories. Merged PRs are noted as such; open PRs reflect active, ongoing work.
 
 ### Polkadot Ecosystem Tests
 #### 1. Deepen Governance Pallet Conviction Voting Test Coverage (merged)
@@ -87,9 +52,45 @@ For promotion to Rank 1, the Manifesto states as a requirement:
 **Impact:** Verifies authorization enforcement for asset rate management, ensuring only privileged origins can modify rates that affect cross-chain asset valuations.
 
 #### 5. Deepen Registrar Pallet Error Path and Edge Case Coverage (open)
-[polkadot-ecosystem-tests#633](https://github.com/open-web3-stack/polkadot-ecosystem-tests/pull/633) expands registrar pallet test coverage to include error conditions and boundary cases that were missing from the earlier PR. It covers insufficient balance and invalid validation code/genesis head sizes during registration, deregistration of non-existent parachains, double-lock prevention, lock removal restrictions, swap authorization (root and para origins), and code upgrade/head update permissions on locked or non-existent parachains.
+[polkadot-ecosystem-tests#633](https://github.com/open-web3-stack/polkadot-ecosystem-tests/pull/633) expands registrar pallet test coverage to include error conditions and boundary cases missing from the earlier PR. It covers insufficient balance and invalid validation code/genesis head sizes during registration, deregistration of non-existent parachains, double-lock prevention, lock removal restrictions, swap authorization (root and para origins), and code upgrade/head update permissions on locked or non-existent parachains.
 
 **Impact:** Closes the gap between happy-path registrar coverage and production reality by testing the error paths that guard against invalid inputs and unauthorized operations — the cases most likely to be exploited or regressed.
+
+### Polkadot-SDK
+#### 1. Add support for asset V3 to V5 conversion of LocalPay (merged)
+[polkadot-sdk#10657](https://github.com/paritytech/polkadot-sdk/pull/10657) adds V3→V5 asset conversion support to the `match_asset` function in `LocalPay`. The function previously only handled V4 and V5 assets — clients still encoding assets as V3 would fail asset matching entirely, blocking fee payment. The fix adds a V3→V5 conversion path (via V4), restoring compatibility for legacy clients without breaking existing behaviour.
+
+**Impact:** Unblocks fee payment for runtimes using `LocalPay` where the sender encodes assets as V3, preventing silent transaction failures at the XCM version boundary.
+
+#### 2. Run PVF worker security checks at node startup (open)
+[polkadot-sdk#10386](https://github.com/paritytech/polkadot-sdk/pull/10386) moves PVF worker security checks to run at node startup rather than only when a worker is first used. Previously, the node verified worker binary versions on startup but deferred all other integrity checks until the worker was actually invoked — which only happens when the node is in the active validator set. The fix invokes the full set of checks at startup and halts the node immediately if any fail, so operators are informed before the node is ever scheduled to validate.
+
+**Impact:** Eliminates a silent failure window where a validator node could run with broken worker binaries undetected, protecting both operator rewards and broader network performance.
+
+#### 3. Add dedicated BenchmarkConfig trait to FRAME (open)
+[polkadot-sdk#10806](https://github.com/paritytech/polkadot-sdk/pull/10806) introduces a dedicated `BenchmarkConfig` trait that extends `pallet::Config` and houses benchmarking-specific helpers separately from the main pallet configuration. Previously, benchmarking logic had to be embedded directly in the `Config` trait behind a `runtime-benchmarks` feature flag, cluttering production configuration with test-only concerns. The PR demonstrates the pattern with an example pallet where runtimes implement `BenchmarkConfig` independently, supplying a `BenchmarkHelper` type without touching the core `Config` trait.
+
+**Impact:** Cleanly separates benchmarking configuration from production pallet configuration, reducing feature-flag noise in `Config` and making it easier to add complex benchmark setup logic without modifying the main trait.
+
+#### 4. Add try-state checks to the timestamp pallet (open)
+[polkadot-sdk#10426](https://github.com/paritytech/polkadot-sdk/pull/10426) adds `do_try_state` to the timestamp pallet, implementing the try-state invariant checking pattern for pallet state validation. Try-state checks verify that a pallet's on-chain state is consistent — analogous to checking that the sum of all balances in `pallet-balances` equals the recorded total issuance. The PR adds the validation logic, integrates the `ensure` macro, and updates the test suite to cover the new checks.
+
+**Impact:** Brings the timestamp pallet into the try-state framework, enabling runtime developers and upgrade tooling to catch state inconsistencies in this pallet before they propagate into production.
+
+#### 5. Remove `pallet::getter` usage from sassafras pallet (merged)
+[polkadot-sdk#10460](https://github.com/paritytech/polkadot-sdk/pull/10460) removes `pallet::getter` from the sassafras pallet and replaces it with the preferred syntax `Key::<T>::get()`. The `pallet::getter` macro generates auto-named getter functions that are being phased out across the SDK in favour of explicit storage access, which is less error-prone and reduces macro expansion overhead.
+
+**Impact:** Advances the ecosystem-wide removal of `pallet::getter`, reducing macro expansion overhead and aligning the sassafras pallet with the modern FRAME storage access convention.
+
+#### 6. Remove `pallet::getter` usage from Merkle Mountain Range pallet (merged)
+[polkadot-sdk#10437](https://github.com/paritytech/polkadot-sdk/pull/10437) removes `pallet::getter` from the Merkle Mountain Range pallet and replaces it with the preferred syntax `Key::<T>::get()`.
+
+**Impact:** Advances the ecosystem-wide removal of `pallet::getter`, reducing macro expansion overhead and aligning the MMR pallet with the modern FRAME storage access convention.
+
+#### 7. Remove `pallet::getter` usage from snowbridge pallets (open)
+[polkadot-sdk#10467](https://github.com/paritytech/polkadot-sdk/pull/10467) removes `pallet::getter` from the snowbridge pallets and replaces it with the preferred syntax `Key::<T>::get()`. The `pallet::getter` macro generates auto-named getter functions that are being phased out across the SDK in favour of explicit storage access, which is less error-prone and reduces macro expansion overhead.
+
+**Impact:** Advances the ecosystem-wide removal of `pallet::getter` into the snowbridge pallets, reducing macro expansion overhead and aligning them with the modern FRAME storage access convention.
 
 ### Try Runtime CLI
 #### 1. Execute a range of past blocks (open)
@@ -102,12 +103,14 @@ For promotion to Rank 1, the Manifesto states as a requirement:
 
 **Impact:** Establishes a test baseline for the offchain-worker command, reducing the risk of regressions in a component that was previously untested.
 
-A full picture of my contributions across Polkadot-SDK, Polkadot Ecosystem Tests, and Try Runtime CLI can be found below.
+My contributions reflect a deliberate effort to build depth across the protocol stack — from runtime correctness and storage ergonomics in the SDK, to integration-level confidence via ecosystem tests. I intend to continue expanding coverage in FRAME tooling, cross-chain messaging, and virtual machine internals. A full picture of my contributions across Polkadot-SDK, Polkadot Ecosystem Tests, and Try Runtime CLI can be found below.
 
 - [polkadot-sdk:@naijauser](https://github.com/paritytech/polkadot-sdk/pulls/naijauser)
 - [polkadot-ecosystem-tests:@naijauser](https://github.com/open-web3-stack/polkadot-ecosystem-tests/pulls?q=is%3Apr+author%3Anaijauser+)
 - [try-runtime-cli:@naijauser](https://github.com/paritytech/try-runtime-cli/pulls/naijauser)
 
+## Acknowledgement
+Thanks to [Alexandre R. Baldé](https://github.com/rockbmb) for their thorough review and feedback on my PRs.
+
 ## Voting record
 N/A
-
