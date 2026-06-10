@@ -77,21 +77,6 @@ My argument presents contributions across all three repositories. Merged PRs are
 
 **Impact:** Brings the timestamp pallet into the try-state framework, enabling runtime developers and upgrade tooling to catch state inconsistencies in this pallet before they propagate into production.
 
-#### 5. Remove `pallet::getter` usage from sassafras pallet (merged)
-[polkadot-sdk#10460](https://github.com/paritytech/polkadot-sdk/pull/10460) removes `pallet::getter` from the sassafras pallet and replaces it with the preferred syntax `Key::<T>::get()`. The `pallet::getter` macro generates auto-named getter functions that are being phased out across the SDK in favour of explicit storage access, which is less error-prone and reduces macro expansion overhead.
-
-**Impact:** Advances the ecosystem-wide removal of `pallet::getter`, reducing macro expansion overhead and aligning the sassafras pallet with the modern FRAME storage access convention.
-
-#### 6. Remove `pallet::getter` usage from Merkle Mountain Range pallet (merged)
-[polkadot-sdk#10437](https://github.com/paritytech/polkadot-sdk/pull/10437) removes `pallet::getter` from the Merkle Mountain Range pallet and replaces it with the preferred syntax `Key::<T>::get()`.
-
-**Impact:** Advances the ecosystem-wide removal of `pallet::getter`, reducing macro expansion overhead and aligning the MMR pallet with the modern FRAME storage access convention.
-
-#### 7. Remove `pallet::getter` usage from snowbridge pallets (open)
-[polkadot-sdk#10467](https://github.com/paritytech/polkadot-sdk/pull/10467) removes `pallet::getter` from the snowbridge pallets and replaces it with the preferred syntax `Key::<T>::get()`. The `pallet::getter` macro generates auto-named getter functions that are being phased out across the SDK in favour of explicit storage access, which is less error-prone and reduces macro expansion overhead.
-
-**Impact:** Advances the ecosystem-wide removal of `pallet::getter` into the snowbridge pallets, reducing macro expansion overhead and aligning them with the modern FRAME storage access convention.
-
 ### Try Runtime CLI
 #### 1. Execute a range of past blocks (open)
 [try-runtime-cli#140](https://github.com/paritytech/try-runtime-cli/pull/140) adds `from` and `to` arguments to the CLI, enabling execution of a sequential range of historical blocks rather than only individual blocks. The implementation extracts block execution into a reusable helper, loops through the specified range fetching and processing each block hash in order, and maintains state across executions. Test coverage for the new range execution capability is included.
@@ -102,6 +87,16 @@ My argument presents contributions across all three repositories. Merged PRs are
 [try-runtime-cli#139](https://github.com/paritytech/try-runtime-cli/pull/139) adds test coverage for the `offchain-worker` command, which previously had no automated tests. The PR implements a happy-path test validating successful offchain worker execution and an error-state test validating failure handling.
 
 **Impact:** Establishes a test baseline for the offchain-worker command, reducing the risk of regressions in a component that was previously untested.
+
+### Supporting Contributions
+#### 1. Remove `pallet::getter` usage from sassafras pallet (merged)
+[polkadot-sdk#10460](https://github.com/paritytech/polkadot-sdk/pull/10460) removes `pallet::getter` from the sassafras pallet and replaces it with the preferred syntax `Key::<T>::get()`. The `pallet::getter` macro generates auto-named getter functions that are being phased out across the SDK in favour of explicit storage access, which is less error-prone and reduces macro expansion overhead.
+
+#### 2. Remove `pallet::getter` usage from Merkle Mountain Range pallet (merged)
+[polkadot-sdk#10437](https://github.com/paritytech/polkadot-sdk/pull/10437) removes `pallet::getter` from the Merkle Mountain Range pallet and replaces it with the preferred syntax `Key::<T>::get()`.
+
+#### 3. Remove `pallet::getter` usage from snowbridge pallets (open)
+[polkadot-sdk#10467](https://github.com/paritytech/polkadot-sdk/pull/10467) removes `pallet::getter` from the snowbridge pallets and replaces it with the preferred syntax `Key::<T>::get()`.
 
 My contributions reflect a deliberate effort to build depth across the protocol stack. A full picture of my contributions across Polkadot-SDK, Polkadot Ecosystem Tests, and Try Runtime CLI can be found below.
 
