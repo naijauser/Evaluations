@@ -104,8 +104,5 @@ My contributions reflect a deliberate effort to build depth across the protocol 
 - [polkadot-ecosystem-tests:@naijauser](https://github.com/open-web3-stack/polkadot-ecosystem-tests/pulls?q=is%3Apr+author%3Anaijauser+)
 - [try-runtime-cli:@naijauser](https://github.com/paritytech/try-runtime-cli/pulls/naijauser)
 
-## Acknowledgement
-Thanks to [Alexandre R. Baldé](https://github.com/rockbmb) for their thorough review and feedback on my Polkadot Ecosystem Test PRs.
-
 ## Voting record
 N/A
